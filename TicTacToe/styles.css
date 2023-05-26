@@ -1,0 +1,44 @@
+* {
+  padding: 0;
+  box-sizing: border-box;
+  background-color: darkgray;
+}
+
+h1 {
+    text-align: center;
+}
+
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  
+}
+
+.grid {
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+
+}
+
+.box {
+  border: 1px solid black;
+  height: 100px;
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box:hover {
+    cursor: pointer;
+}
+
+
+.box.x, .box.o {
+    color: black;
+    font-size: 60px;
+}
