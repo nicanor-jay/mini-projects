@@ -1,54 +1,53 @@
 * {
-	padding: 0;
-	box-sizing: border-box;
 	background-color: darkgray;
 }
 
-h1 {
-	text-align: center;
-}
-
-#reset-button {
-	font-size: large;
-	padding: 5px 10px;
-	margin-bottom: 10px;
-	background-color: white;
-	cursor: pointer;
-}
-
-.game {
+.container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
 }
 
-.grid {
+h1 {
+	text-align: center;
+}
+
+.gameBoard {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: 1fr 1fr 1fr;
+	gap: 1rem;
 }
 
-.box {
+.gameSquare {
 	border: 1px solid black;
 	height: 100px;
 	width: 100px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	font-size: 50px;
+	cursor: pointer;
+	border-radius: 10px;
 }
 
-.box:not(.x):not(.o):hover {
+.gameSquare:hover {
 	cursor: pointer;
 	background-color: white;
 }
 
-.box.x,
-.box.o {
-	color: black;
-	font-size: 60px;
+.x {
+	color: red;
 }
 
-.winning-buttons {
+.o {
+	color: blue;
+}
+
+.resetButton {
+	margin-bottom: 20px;
+	padding: 5px 10px;
 	background-color: white;
+	font-size: 20px;
 }
