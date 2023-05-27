@@ -8,11 +8,19 @@ h1 {
     text-align: center;
 }
 
+#reset-button {
+  font-size: large;
+  padding: 5px 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  cursor: pointer;
+}
+
 .game {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   flex-direction: column;
   
 }
@@ -33,12 +41,17 @@ h1 {
   justify-content: center;
 }
 
-.box:hover {
+.box:not(.x):not(.o):hover {
     cursor: pointer;
+    background-color: white;
 }
 
 
 .box.x, .box.o {
     color: black;
     font-size: 60px;
+}
+
+.winning-buttons {
+  background-color: white;
 }
