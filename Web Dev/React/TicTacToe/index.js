@@ -1,3 +1,5 @@
+//React app for tictactoe
+
 const GameSquare = ({ value, onClick = null }) => {
 	const style = value === "X" ? "gameSquare x" : "gameSquare o";
 
