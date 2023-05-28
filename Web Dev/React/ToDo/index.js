@@ -1,9 +1,9 @@
 const Task = ({ value, onClick = null }) => {
 	return (
 		<li className="task">
-			<p>{value}</p>
+			<p class="taskDesc">{value}</p>
 			<button onClick={onClick}>
-				<i className="fa-solid fa-check green"></i>
+				<i className="fa-solid fa-check"></i>
 			</button>
 		</li>
 	);
@@ -18,6 +18,13 @@ const ToDoApp = () => {
 		setText(event.target.value);
 	};
 
+	const handleKeyDown = (event) => {
+		if (event.keyCode === 13) {
+			// Call your function here
+			addTask();
+		}
+	};
+
 	const taskCompleted = (idx) => {
 		const updatedTasks = [...taskList];
 		updatedTasks.splice(idx, 1);
@@ -26,6 +33,9 @@ const ToDoApp = () => {
 	};
 
 	const addTask = () => {
+		if (text === "") {
+			return;
+		}
 		setTaskList([...taskList, text]);
 		setText("");
 	};
@@ -33,16 +43,21 @@ const ToDoApp = () => {
 	return (
 		<div className="toDoApp">
 			<ul>
-				{taskList.map((task, idx) => {
-					return <Task value={task} onClick={() => taskCompleted(idx)} />;
-				})}
 				<input
 					type="text"
 					placeholder="Enter task..."
 					onChange={handleChange}
 					value={text}
+					className="taskEntry"
+					onKeyDown={handleKeyDown}
 				></input>
-				<button onClick={addTask}>Add</button>
+				<button className="addTaskButton" onClick={addTask}>
+					<i className="fa-solid fa-plus"></i>
+				</button>
+				<hr className="separator"></hr>
+				{taskList.map((task, idx) => {
+					return <Task value={task} onClick={() => taskCompleted(idx)} />;
+				})}
 			</ul>
 			<div></div>
 		</div>
