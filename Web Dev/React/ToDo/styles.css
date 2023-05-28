@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+:root {
+	--text: #200919;
+	--background: #f5dbed;
+	--primary-button: #3acb67;
+	--secondary: #fbeff7;
+}
+
+#app {
+	background-color: #f5dbed;
+	height: 100vh;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+h1 {
+	text-align: center;
+	color: var(--text);
+	font-weight: 700;
+}
+
+.toDoApp {
+	display: flex;
+	justify-content: center;
+	align-items: left;
+	flex-direction: column;
+	padding: 10px 20px;
+}
+
+ul {
+	text-align: left;
+}
+
+.task {
+	display: flex;
+	justify-content: space-between;
+	align-items: space;
+	background-color: var(--secondary);
+	border-radius: 5px;
+
+	padding: 10px;
+	min-width: 100%;
+	max-width: 50vw;
+	margin-bottom: 5px;
+}
+
+.task p {
+	margin: 0;
+	margin-right: 20px;
+}
+
+.task button {
+	border-radius: 10px;
+	height: 25px;
+	width: 25px;
+	border: none;
+	color: white;
+	background-color: var(--primary-button);
+}
+
+.task button:hover {
+	border: solid 1px var(--primary-button);
+	color: var(--primary-button);
+	background-color: white;
+}
