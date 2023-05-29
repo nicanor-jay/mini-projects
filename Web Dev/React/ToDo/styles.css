@@ -91,30 +91,34 @@ ul {
 	width: 85%;
 }
 
-.task button,
-.completed-task button {
+.task .tick-button {
+	margin-left: 2px;
+}
+
+.tick-button,
+.delete-button {
 	border-radius: 10px;
 	height: 25px;
 	width: 25px;
 	border: none;
 	color: white;
 }
-.task button {
+.tick-button {
 	background-color: var(--primary-button);
 }
 
-.task > button:hover,
-.completed-task > button:hover {
+.tick-button:hover,
+.delete-button:hover {
 	border: solid 1px var(--primary-button);
 	color: var(--primary-button);
 	background-color: white;
 }
 
-.completed-task button {
+.delete-button {
 	background-color: var(--delete);
 }
 
-.completed-task > button:hover {
+.delete-button:hover {
 	border: solid 1px var(--delete);
 	color: var(--delete);
 	background-color: white;

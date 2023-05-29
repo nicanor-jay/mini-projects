@@ -1,8 +1,27 @@
-const Task = ({ value, onClick = null }) => {
+const Task = ({ value, onClickFunctions = null }) => {
+	const [isHovered, setIsHovered] = React.useState(false);
+
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+
+	const handleMouseLeave = () => {
+		setIsHovered(false);
+	};
+
 	return (
-		<li className="task">
+		<li
+			className="task"
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
 			<p className="task-desc">{value}</p>
-			<button onClick={onClick}>
+			{isHovered && (
+				<button onClick={onClickFunctions[1]} className="delete-button">
+					<i className="fa fa-trash"></i>
+				</button>
+			)}
+			<button onClick={onClickFunctions[0]} className="tick-button">
 				<i className="fa-solid fa-check"></i>
 			</button>
 		</li>
@@ -27,7 +46,7 @@ const CompletedTask = ({ value, onClick = null }) => {
 		>
 			<p className="completed-task-desc">{value}</p>
 			{isHovered && (
-				<button onClick={onClick}>
+				<button onClick={onClick} className="delete-button">
 					<i className="fa fa-trash"></i>
 				</button>
 			)}
@@ -72,10 +91,16 @@ const ToDoApp = () => {
 		}
 	};
 
-	const deleteTask = (idx) => {
-		const updatedTasks = [...completedTaskList];
-		updatedTasks.splice(idx, 1);
-		setCompletedTaskList(updatedTasks);
+	const deleteTask = (idx, desiredList = null) => {
+		if (desiredList === null) {
+			const updatedTasks = [...completedTaskList];
+			updatedTasks.splice(idx, 1);
+			setCompletedTaskList(updatedTasks);
+		} else {
+			const updatedTasks = [...taskList];
+			updatedTasks.splice(idx, 1);
+			setTaskList(updatedTasks);
+		}
 	};
 
 	const taskCompleted = (idx) => {
@@ -91,7 +116,8 @@ const ToDoApp = () => {
 	};
 
 	const addTask = () => {
-		if (text === "") {
+		if (text === "" || taskList.includes(text)) {
+			setText("");
 			return;
 		}
 		setTaskList([...taskList, text]);
@@ -114,11 +140,26 @@ const ToDoApp = () => {
 				</button>
 				{taskList.length > 0 && <hr className="separator"></hr>}
 				{taskList.map((task, idx) => {
-					return <Task value={task} onClick={() => taskCompleted(idx)} />;
+					return (
+						<Task
+							value={task}
+							key={idx}
+							onClickFunctions={[
+								() => taskCompleted(idx),
+								() => deleteTask(idx, "tasks"),
+							]}
+						/>
+					);
 				})}
 				{completedTaskList.length > 0 && <hr className="separator"></hr>}
 				{completedTaskList.map((task, idx) => {
-					return <CompletedTask value={task} onClick={() => deleteTask(idx)} />;
+					return (
+						<CompletedTask
+							key={idx}
+							value={task}
+							onClick={() => deleteTask(idx)}
+						/>
+					);
 				})}
 			</ul>
 			<div></div>
