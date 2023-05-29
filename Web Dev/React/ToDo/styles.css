@@ -4,6 +4,8 @@
 	--background: #f5dbed;
 	--primary-button: #3acb67;
 	--secondary: #fbeff7;
+	--completed: #d2d2ce;
+	--delete: #ef221a;
 }
 
 #app {
@@ -61,40 +63,64 @@ ul {
 	margin: 10px 0px;
 }
 
-.task {
+.task,
+.completed-task {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: var(--secondary);
 	border-radius: 5px;
-
 	padding: 10px;
 	width: 100%;
 	margin-top: 5px;
 }
 
-.task:hover {
+.task {
+	background-color: var(--secondary);
+}
+
+.task:hover,
+.completed-task:hover {
 	/* Hover styles */
 	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
 }
 
-.taskDesc {
+.task-desc,
+.completed-task-desc {
 	margin: 0;
 	word-wrap: break-word;
 	width: 85%;
 }
 
-.task button {
+.task button,
+.completed-task button {
 	border-radius: 10px;
 	height: 25px;
 	width: 25px;
 	border: none;
 	color: white;
+}
+.task button {
 	background-color: var(--primary-button);
 }
 
-.task button:hover {
+.task > button:hover,
+.completed-task > button:hover {
 	border: solid 1px var(--primary-button);
 	color: var(--primary-button);
 	background-color: white;
+}
+
+.completed-task button {
+	background-color: var(--delete);
+}
+
+.completed-task > button:hover {
+	border: solid 1px var(--delete);
+	color: var(--delete);
+	background-color: white;
+}
+
+.completed-task {
+	text-decoration: line-through;
+	background-color: var(--completed);
 }

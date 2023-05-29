@@ -1,7 +1,7 @@
 const Task = ({ value, onClick = null }) => {
 	return (
 		<li className="task">
-			<p class="taskDesc">{value}</p>
+			<p className="task-desc">{value}</p>
 			<button onClick={onClick}>
 				<i className="fa-solid fa-check"></i>
 			</button>
@@ -9,12 +9,59 @@ const Task = ({ value, onClick = null }) => {
 	);
 };
 
+const CompletedTask = ({ value, onClick = null }) => {
+	const [isHovered, setIsHovered] = React.useState(false);
+
+	const handleMouseEnter = () => {
+		setIsHovered(true);
+	};
+
+	const handleMouseLeave = () => {
+		setIsHovered(false);
+	};
+	return (
+		<li
+			className="completed-task"
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
+			<p className="completed-task-desc">{value}</p>
+			{isHovered && (
+				<button onClick={onClick}>
+					<i className="fa fa-trash"></i>
+				</button>
+			)}
+		</li>
+	);
+};
+
 const ToDoApp = () => {
 	const [taskList, setTaskList] = React.useState([]);
 	const [text, setText] = React.useState("");
+	const [completedTaskList, setCompletedTaskList] = React.useState([]);
+
+	//Stores todo list in local storage
+	React.useEffect(() => {
+		let storedTasks = JSON.parse(localStorage.getItem("tasks"));
+		let storedCompletedTasks = JSON.parse(
+			localStorage.getItem("completedTasks")
+		);
+		if (storedTasks) {
+			setTaskList(storedTasks);
+		}
+		if (storedCompletedTasks) {
+			setCompletedTaskList(storedCompletedTasks);
+		}
+	}, []);
+
+	//Retries todo list from local storage if it exists
+	React.useEffect(() => {
+		localStorage.clear();
+		localStorage.setItem("tasks", JSON.stringify(taskList));
+		localStorage.setItem("completedTasks", JSON.stringify(completedTaskList));
+	}, [taskList, completedTaskList]);
 
 	const handleChange = (event) => {
-		console.log(event.target.value + "");
 		setText(event.target.value);
 	};
 
@@ -25,10 +72,21 @@ const ToDoApp = () => {
 		}
 	};
 
+	const deleteTask = (idx) => {
+		const updatedTasks = [...completedTaskList];
+		updatedTasks.splice(idx, 1);
+		setCompletedTaskList(updatedTasks);
+	};
+
 	const taskCompleted = (idx) => {
 		const updatedTasks = [...taskList];
 		updatedTasks.splice(idx, 1);
+		setCompletedTaskList([
+			...completedTaskList,
+			...taskList.slice(idx, idx + 1),
+		]);
 		setTaskList(updatedTasks);
+
 		return;
 	};
 
@@ -54,9 +112,13 @@ const ToDoApp = () => {
 				<button className="addTaskButton" onClick={addTask}>
 					<i className="fa-solid fa-plus"></i>
 				</button>
-				<hr className="separator"></hr>
+				{taskList.length > 0 && <hr className="separator"></hr>}
 				{taskList.map((task, idx) => {
 					return <Task value={task} onClick={() => taskCompleted(idx)} />;
+				})}
+				{completedTaskList.length > 0 && <hr className="separator"></hr>}
+				{completedTaskList.map((task, idx) => {
+					return <CompletedTask value={task} onClick={() => deleteTask(idx)} />;
 				})}
 			</ul>
 			<div></div>
