@@ -85,10 +85,16 @@ ul {
 }
 
 .task-desc,
-.completed-task-desc {
+.completed-task-desc,
+.task-desc-edit {
 	margin: 0;
 	word-wrap: break-word;
 	width: 85%;
+}
+
+.task-desc-edit {
+	border-radius: 5px;
+	border: none;
 }
 
 .task .tick-button {

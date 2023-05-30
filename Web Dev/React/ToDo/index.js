@@ -2,13 +2,13 @@ const Task = ({ value, onClickFunctions = null }) => {
 	const [isHovered, setIsHovered] = React.useState(false);
 	const [isEditing, setIsEditing] = React.useState(false);
 	const [currText, setCurrText] = React.useState(value);
-
 	const handleClick = () => {
-		setIsEditing(!isEditing);
+		setIsEditing(true);
 	};
 
 	const handleChange = (event) => {
 		setCurrText(event.target.value);
+		onClickFunctions[2](currText);
 	};
 
 	const handleKeyDown = (event) => {
@@ -17,6 +17,11 @@ const Task = ({ value, onClickFunctions = null }) => {
 			setIsEditing(false);
 			onClickFunctions[2](currText);
 		}
+	};
+
+	const handleBlur = () => {
+		setIsEditing(false);
+		onClickFunctions[2](currText);
 	};
 
 	const handleMouseEnter = () => {
@@ -39,6 +44,9 @@ const Task = ({ value, onClickFunctions = null }) => {
 					value={currText}
 					onChange={handleChange}
 					onKeyDown={handleKeyDown}
+					className="task-desc-edit"
+					onBlur={handleBlur}
+					autoFocus
 				></input>
 			) : (
 				<p className="task-desc" onClick={handleClick} onChange={handleChange}>
