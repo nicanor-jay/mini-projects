@@ -1,5 +1,23 @@
 const Task = ({ value, onClickFunctions = null }) => {
 	const [isHovered, setIsHovered] = React.useState(false);
+	const [isEditing, setIsEditing] = React.useState(false);
+	const [currText, setCurrText] = React.useState(value);
+
+	const handleClick = () => {
+		setIsEditing(!isEditing);
+	};
+
+	const handleChange = (event) => {
+		setCurrText(event.target.value);
+	};
+
+	const handleKeyDown = (event) => {
+		if (event.keyCode === 13) {
+			// Call your function here
+			setIsEditing(false);
+			onClickFunctions[2](currText);
+		}
+	};
 
 	const handleMouseEnter = () => {
 		setIsHovered(true);
@@ -15,7 +33,19 @@ const Task = ({ value, onClickFunctions = null }) => {
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
 		>
-			<p className="task-desc">{value}</p>
+			{isEditing ? (
+				<input
+					type="text"
+					value={currText}
+					onChange={handleChange}
+					onKeyDown={handleKeyDown}
+				></input>
+			) : (
+				<p className="task-desc" onClick={handleClick} onChange={handleChange}>
+					{value}
+				</p>
+			)}
+
 			{isHovered && (
 				<button onClick={onClickFunctions[1]} className="delete-button">
 					<i className="fa fa-trash"></i>
@@ -58,6 +88,7 @@ const ToDoApp = () => {
 	const [taskList, setTaskList] = React.useState([]);
 	const [text, setText] = React.useState("");
 	const [completedTaskList, setCompletedTaskList] = React.useState([]);
+	const [completedVisibility, setCompletedVisibility] = React.useState(false);
 
 	//Stores todo list in local storage
 	React.useEffect(() => {
@@ -73,7 +104,7 @@ const ToDoApp = () => {
 		}
 	}, []);
 
-	//Retries todo list from local storage if it exists
+	//Retrives todo list from local storage if it exists
 	React.useEffect(() => {
 		localStorage.clear();
 		localStorage.setItem("tasks", JSON.stringify(taskList));
@@ -103,6 +134,10 @@ const ToDoApp = () => {
 		}
 	};
 
+	const showCompleted = () => {
+		setCompletedVisibility(!completedVisibility);
+	};
+
 	const taskCompleted = (idx) => {
 		const updatedTasks = [...taskList];
 		updatedTasks.splice(idx, 1);
@@ -122,6 +157,16 @@ const ToDoApp = () => {
 		}
 		setTaskList([...taskList, text]);
 		setText("");
+	};
+
+	const editTask = (idx, newValue = null) => {
+		if (newValue === "") {
+			deleteTask(idx, "tasks");
+			return;
+		}
+		let newTaskList = [...taskList];
+		newTaskList[idx] = newValue;
+		setTaskList(newTaskList);
 	};
 
 	return (
@@ -147,20 +192,34 @@ const ToDoApp = () => {
 							onClickFunctions={[
 								() => taskCompleted(idx),
 								() => deleteTask(idx, "tasks"),
+								(updatedTask) => editTask(idx, updatedTask),
 							]}
 						/>
 					);
 				})}
 				{completedTaskList.length > 0 && <hr className="separator"></hr>}
-				{completedTaskList.map((task, idx) => {
-					return (
-						<CompletedTask
-							key={idx}
-							value={task}
-							onClick={() => deleteTask(idx)}
-						/>
-					);
-				})}
+				<div className="show-button-container">
+					{completedTaskList.length != 0 && (
+						<button className="show-button" onClick={showCompleted}>
+							{completedVisibility ? "Hide Completed" : "Show Completed"}
+							{completedVisibility ? (
+								<i className="fa-solid fa-angle-up"></i>
+							) : (
+								<i className="fa-solid fa-angle-down"></i>
+							)}
+						</button>
+					)}
+				</div>
+				{completedVisibility &&
+					completedTaskList.map((task, idx) => {
+						return (
+							<CompletedTask
+								key={idx}
+								value={task}
+								onClick={() => deleteTask(idx)}
+							/>
+						);
+					})}
 			</ul>
 			<div></div>
 		</div>
