@@ -1,0 +1,17 @@
+.card {
+	background-color: var(--secondary);
+	width: 400px;
+
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.habit-name {
+	/* padding: 5px; */
+	width: 30%;
+}
+
+.history-container {
+	width: 70%;
+}
