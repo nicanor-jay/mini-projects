@@ -2,29 +2,18 @@ import { useEffect, useState } from "react";
 import "./HabitCard.css";
 import "../../variables.css";
 
-function HabitCard({ value = "Hello", color, history }) {
-	const [habitHistory, setHabitHistory] = useState(history);
-	const [recentHistory, setRecentHistory] = useState([
-		...habitHistory.slice(0, 5),
-	]);
-
-	useEffect(() => {
-		setRecentHistory([...habitHistory.slice(0, 5)]);
-	}, [habitHistory]);
-
+function HabitCard({ habitId, name, color, history, updateHabitsHistory }) {
 	const toggleState = (idx) => {
-		let newArray = [...habitHistory];
-		newArray[idx] = !newArray[idx];
-		setHabitHistory(newArray);
+		updateHabitsHistory(habitId, idx);
 	};
 
 	return (
 		<div className="card">
 			<h2 className="habit-name" style={{ color: color }}>
-				{value}
+				{name}
 			</h2>
 			<div className="history-container">
-				{recentHistory.map((state, idx) => {
+				{history.slice(0, 5).map((state, idx) => {
 					return state.completed ? (
 						<i
 							className="fa-solid fa-check check-mark"

@@ -11,8 +11,8 @@ function HabitHeader({ dates }) {
 		<div className="card">
 			<h2 className="habit-title fw-bold">Habits</h2>
 			<div className="dates-container">
-				{dates.slice(0, 5).map((date) => {
-					return <DateContainer dateString={date.dateString} />;
+				{dates.slice(0, 5).map((date, idx) => {
+					return <DateContainer dateString={date.dateString} key={idx} />;
 				})}
 			</div>
 		</div>
