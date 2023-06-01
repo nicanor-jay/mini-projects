@@ -3,9 +3,7 @@ import "./HabitCard.css";
 import "../../variables.css";
 
 function HabitCard({ value = "Hello", color, history }) {
-	const [habitName, setHabitName] = useState(value);
 	const [habitHistory, setHabitHistory] = useState(history);
-	const [habitColor, setHabitColor] = useState(color);
 	const [recentHistory, setRecentHistory] = useState([
 		...habitHistory.slice(0, 5),
 	]);
@@ -23,8 +21,8 @@ function HabitCard({ value = "Hello", color, history }) {
 
 	return (
 		<div className="card">
-			<h2 className="habit-name" style={{ color: habitColor }}>
-				{habitName}
+			<h2 className="habit-name" style={{ color: color }}>
+				{value}
 			</h2>
 			<div className="history-container">
 				{recentHistory.map((state, idx) => {
@@ -32,7 +30,7 @@ function HabitCard({ value = "Hello", color, history }) {
 						<i
 							className="fa-solid fa-check check-mark"
 							key={idx}
-							style={{ color: habitColor }}
+							style={{ color: color }}
 							onClick={() => toggleState(idx)}
 						></i>
 					) : (

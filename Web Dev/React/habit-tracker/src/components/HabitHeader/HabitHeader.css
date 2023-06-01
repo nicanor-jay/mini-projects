@@ -1,0 +1,23 @@
+.card {
+	background-color: var(--secondary);
+	width: 400px;
+	height: 50px;
+
+	display: inline-flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.habit-title {
+	font-size: 18px;
+	width: 40%;
+	margin: 0;
+	padding: 5px;
+}
+
+.date-container {
+	width: 70%;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+}
