@@ -7,7 +7,6 @@ function HabitCard({ value = "Hello", color, history }) {
 	const [recentHistory, setRecentHistory] = useState([
 		...habitHistory.slice(0, 5),
 	]);
-	``;
 
 	useEffect(() => {
 		setRecentHistory([...habitHistory.slice(0, 5)]);
@@ -26,7 +25,7 @@ function HabitCard({ value = "Hello", color, history }) {
 			</h2>
 			<div className="history-container">
 				{recentHistory.map((state, idx) => {
-					return state ? (
+					return state.completed ? (
 						<i
 							className="fa-solid fa-check check-mark"
 							key={idx}

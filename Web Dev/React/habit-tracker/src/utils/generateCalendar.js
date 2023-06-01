@@ -13,13 +13,9 @@ function generateCalendar(x) {
 		// Convert the date to a string in calendar form.
 		var dateString = date.toLocaleDateString();
 
-		// Generate a random boolean value.
-		var completed = Math.random() > 0.5;
-
 		// Add the date and completed to the dates array.
 		dates.push({
-			date: dateString,
-			completed: completed,
+			dateString,
 		});
 	}
 
