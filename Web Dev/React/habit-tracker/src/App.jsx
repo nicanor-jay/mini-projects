@@ -33,6 +33,17 @@ function App() {
 		setHabits(updatedHabits);
 	};
 
+	const addHabit = (habitName, color, habitHistory = null) => {
+		let newHabit = {
+			habitName: habitName,
+			color: color,
+			habitHistory: generateHistory(30),
+		};
+
+		let updatedHabits = [...habits, newHabit];
+		setHabits(updatedHabits);
+	};
+
 	return (
 		<div className="d-flex justify-content-center flex-column">
 			{/* Top Element showing heading and dates */}
@@ -50,6 +61,12 @@ function App() {
 					/>
 				);
 			})}
+			<button
+				className="btn btn-primary"
+				onClick={() => addHabit("hi", "#ff67ea")}
+			>
+				<i className="fa-solid fa-plus"></i> Add Habit
+			</button>
 		</div>
 	);
 }
