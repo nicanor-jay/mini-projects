@@ -56,3 +56,19 @@
 	width: 30%;
 	max-width: 150px;
 }
+
+input {
+	margin-bottom: 5px;
+}
+
+label {
+	margin-bottom: 2px;
+}
+
+select,
+input {
+	background-color: white;
+	color: black;
+	border: none;
+	border-radius: 5px;
+}

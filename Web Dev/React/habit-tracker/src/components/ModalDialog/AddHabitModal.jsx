@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./AddHabitModal.css";
+import ColorOption from "../ColorOption/ColorOption.jsx";
 import "../../variables.css";
 
 const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
@@ -9,11 +10,21 @@ const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
 
 	const handleClose = () => {
 		setOpen(false);
+		setHabitName("");
+		setColor("");
 	};
 
 	const handleHabitNameChange = (event) => {
 		setHabitName(event.target.value);
 		console.log(habitName);
+	};
+
+	const handleKeyDown = (event) => {
+		if (event.keyCode === 13) {
+			// Call your function here
+			event.preventDefault();
+			handleSubmit();
+		}
 	};
 
 	const handleColorChange = (event) => {
@@ -26,6 +37,16 @@ const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
 		}
 		addHabit(habitName, color);
 		handleClose();
+	};
+
+	const colorOptions = {
+		"#FF0000": "Red",
+		"#00FF00": "Green",
+		"#0000FF": "Blue",
+		"#A020F0": "Purple",
+		"#FFA500": "Orange",
+		"#FFFF00": "Yellow",
+		"#000000": "Black",
 	};
 
 	return (
@@ -54,17 +75,26 @@ const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
 									type="text"
 									id="habitName"
 									onChange={handleHabitNameChange}
+									onKeyDown={handleKeyDown}
 								/>
 								<label htmlFor="habitName">Colour</label>
 								<select name="color" onChange={handleColorChange}>
 									<option value="">Select an option</option>
-									<option value="#FF0000">Red</option>
+									{/* <option value="#FF0000">Red</option>
 									<option value="#00FF00">Green</option>
 									<option value="#0000FF">Blue</option>
 									<option value="#A020F0">Purple</option>
 									<option value="#FFA500">Orange</option>
 									<option value="#FFFF00">Yellow</option>
-									<option value="#000000">Black</option>
+									<option value="#000000">Black</option> */}
+
+									{Object.entries(colorOptions).map(([colorCode, label]) => (
+										<ColorOption
+											label={label}
+											colorCode={colorCode}
+											key={label}
+										/>
+									))}
 								</select>
 							</form>
 						</div>
