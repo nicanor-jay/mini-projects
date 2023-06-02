@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import "./variables.css";
 import HabitHeader from "./components/HabitHeader/HabitHeader.jsx";
 import HabitCard from "./components/HabitCard/HabitCard.jsx";
 import generateHistory from "./utils/generateHistory";
-import AddHabitModal from "./components/ModalDialog/AddHabitModal";
-import "./variables.css";
+import AddHabitModal from "./components/AddHabitModal/AddHabitModal.jsx";
+import ViewHabitModal from "./components/ViewHabitModal/ViewHabitModal.jsx";
 import generateCalendar from "./utils/generateCalendar";
 
 function App() {
@@ -25,8 +26,14 @@ function App() {
 			habitHistory: generateHistory(30),
 		},
 	]);
-
 	const [dateIndex, setDateIndex] = useState(0);
+	const [isViewingHabit, setIsViewingHabit] = useState(false);
+	const [currentlyViewedHabit, setCurrentlyViewedHabit] = useState(null);
+
+	const handleHabitClick = (idx) => {
+		setCurrentlyViewedHabit(idx);
+		setIsViewingHabit(!isViewingHabit);
+	};
 
 	const adjustDateIndex = (val) => {
 		if (dateIndex + val < 0) {
@@ -73,6 +80,7 @@ function App() {
 						history={habit.habitHistory}
 						updateHabitsHistory={updateHabitsHistory}
 						dateIndex={dateIndex}
+						onClick={(idx) => handleHabitClick(idx)}
 					/>
 				);
 			})}
@@ -82,6 +90,13 @@ function App() {
 				title="Add Habit"
 				addHabit={addHabit}
 			/>
+			{isViewingHabit && (
+				<ViewHabitModal
+					habit={habits[currentlyViewedHabit]}
+					setCurrentlyViewedHabit={setCurrentlyViewedHabit}
+					setIsViewingHabit={setIsViewingHabit}
+				/>
+			)}
 		</div>
 	);
 }

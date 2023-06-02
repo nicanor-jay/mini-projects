@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./AddHabitModal.css";
-import ColorOption from "../ColorOption/ColorOption.jsx";
 import "../../variables.css";
+import ColorOption from "../ColorOption/ColorOption.jsx";
 
-const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
+const AddHabitModal = ({ CTA, icon = null, title, addHabit }) => {
 	const [open, setOpen] = useState(false);
 	const [habitName, setHabitName] = useState("");
 	const [color, setColor] = useState("");
@@ -79,13 +79,6 @@ const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
 								<label htmlFor="habitName">Colour</label>
 								<select name="color" onChange={handleColorChange}>
 									<option value="">Select an option</option>
-									{/* <option value="#FF0000">Red</option>
-									<option value="#00FF00">Green</option>
-									<option value="#0000FF">Blue</option>
-									<option value="#A020F0">Purple</option>
-									<option value="#FFA500">Orange</option>
-									<option value="#FFFF00">Yellow</option>
-									<option value="#000000">Black</option> */}
 
 									{Object.entries(colorOptions).map(([colorCode, label]) => (
 										<ColorOption
@@ -113,4 +106,4 @@ const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
 	);
 };
 
-export default ModalDialog;
+export default AddHabitModal;

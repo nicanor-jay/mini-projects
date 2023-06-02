@@ -9,6 +9,7 @@ function HabitCard({
 	history,
 	updateHabitsHistory,
 	dateIndex,
+	onClick,
 }) {
 	const toggleState = (idx) => {
 		updateHabitsHistory(habitId, dateIndex + idx);
@@ -16,7 +17,11 @@ function HabitCard({
 
 	return (
 		<div className="card">
-			<h2 className="habit-name" style={{ color: color }}>
+			<h2
+				className="habit-name"
+				style={{ color: color }}
+				onClick={() => onClick(habitId)}
+			>
 				{name}
 			</h2>
 			<i className="fa-solid fa-caret-left hidden"></i>
