@@ -1,0 +1,81 @@
+.modal-dialog {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(150, 150, 150, 0.5);
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+}
+
+.modal-content {
+	background-color: var(--secondary);
+	border-radius: 10px;
+	padding: 10px;
+
+	position: absolute;
+	width: 50%;
+	max-width: 600px;
+	height: auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+}
+
+.modal-title {
+	font-weight: 600;
+}
+
+.modal-form {
+	display: flex;
+	flex-direction: column;
+	/* align-items: center; */
+}
+.modal-footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 10px;
+}
+
+.root-add-button,
+.modal-add-button {
+	background-color: var(--primary);
+}
+
+.root-add-button {
+	width: 50%;
+	transition: scale 0.1s ease-in-out;
+}
+
+.root-add-button:hover {
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+	scale: 1.05;
+}
+.modal-add-button {
+	width: 30%;
+	max-width: 150px;
+}
+
+input {
+	margin-bottom: 5px;
+}
+
+label {
+	margin-bottom: 2px;
+}
+
+select,
+input {
+	background-color: white;
+	color: black;
+	border: none;
+	border-radius: 5px;
+}

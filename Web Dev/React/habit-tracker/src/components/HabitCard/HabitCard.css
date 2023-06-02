@@ -1,6 +1,6 @@
 .card {
 	background-color: var(--secondary);
-	width: 400px;
+	width: 450px;
 	height: 50px;
 
 	display: inline-flex;
@@ -13,6 +13,11 @@
 	width: 40%;
 	margin: 0;
 	padding: 5px;
+	cursor: pointer;
+}
+
+.habit-name:hover {
+	font-weight: 600;
 }
 
 .history-container {
@@ -29,12 +34,18 @@
 	display: flex;
 	justify-content: space-around;
 	width: 100%;
+	transition: scale 0.1s ease-in-out;
 }
 
-/* .check-mark {
-	color: var(--primary);
-} */
+.check-mark:hover,
+.x-mark:hover {
+	scale: 1.6;
+}
 
 .x-mark {
 	color: darkgray;
+}
+
+.hidden {
+	opacity: 0;
 }

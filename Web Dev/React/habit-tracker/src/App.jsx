@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import "./variables.css";
 import HabitHeader from "./components/HabitHeader/HabitHeader.jsx";
 import HabitCard from "./components/HabitCard/HabitCard.jsx";
 import generateHistory from "./utils/generateHistory";
-import "./variables.css";
+import AddHabitModal from "./components/AddHabitModal/AddHabitModal.jsx";
+import ViewHabitModal from "./components/ViewHabitModal/ViewHabitModal.jsx";
 import generateCalendar from "./utils/generateCalendar";
 
 function App() {
@@ -11,19 +13,34 @@ function App() {
 		{
 			habitName: "Workout",
 			color: "#7A3F92",
-			habitHistory: generateHistory(30),
+			habitHistory: generateHistory(45),
 		},
 		{
 			habitName: "Drink Water",
 			color: "#E84C1A",
-			habitHistory: generateHistory(30),
+			habitHistory: generateHistory(45),
 		},
 		{
 			habitName: "Wake up early",
 			color: "#41B9A8",
-			habitHistory: generateHistory(30),
+			habitHistory: generateHistory(45),
 		},
 	]);
+	const [dateIndex, setDateIndex] = useState(0);
+	const [isViewingHabit, setIsViewingHabit] = useState(false);
+	const [currentlyViewedHabit, setCurrentlyViewedHabit] = useState(null);
+
+	const handleHabitClick = (idx) => {
+		setCurrentlyViewedHabit(habits[idx]);
+		setIsViewingHabit(!isViewingHabit);
+	};
+
+	const adjustDateIndex = (val) => {
+		if (dateIndex + val < 0) {
+			return;
+		}
+		setDateIndex(dateIndex + val);
+	};
 
 	const updateHabitsHistory = (habitId, idx) => {
 		let updatedHabits = [...habits];
@@ -47,7 +64,11 @@ function App() {
 	return (
 		<div className="d-flex justify-content-center flex-column">
 			{/* Top Element showing heading and dates */}
-			<HabitHeader dates={generateCalendar(30)} />
+			<HabitHeader
+				dates={generateCalendar(30)}
+				dateIndex={dateIndex}
+				adjustDateIndex={adjustDateIndex}
+			/>
 			{/* Will loop through habit cards to display, depending on how many habits are being tracked */}
 			{habits.map((habit, idx) => {
 				return (
@@ -58,15 +79,24 @@ function App() {
 						color={habit.color}
 						history={habit.habitHistory}
 						updateHabitsHistory={updateHabitsHistory}
+						dateIndex={dateIndex}
+						onClick={(idx) => handleHabitClick(idx)}
 					/>
 				);
 			})}
-			<button
-				className="btn btn-primary"
-				onClick={() => addHabit("hi", "#ff67ea")}
-			>
-				<i className="fa-solid fa-plus"></i> Add Habit
-			</button>
+			<AddHabitModal
+				CTA="Add Habit"
+				icon={<i className="fa-solid fa-plus"></i>}
+				title="Add Habit"
+				addHabit={addHabit}
+			/>
+			{isViewingHabit && (
+				<ViewHabitModal
+					habit={currentlyViewedHabit}
+					setCurrentlyViewedHabit={setCurrentlyViewedHabit}
+					setIsViewingHabit={setIsViewingHabit}
+				/>
+			)}
 		</div>
 	);
 }
