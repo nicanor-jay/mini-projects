@@ -26,6 +26,15 @@ function App() {
 		},
 	]);
 
+	const [dateIndex, setDateIndex] = useState(0);
+
+	const adjustDateIndex = (val) => {
+		if (dateIndex + val < 0) {
+			return;
+		}
+		setDateIndex(dateIndex + val);
+	};
+
 	const updateHabitsHistory = (habitId, idx) => {
 		let updatedHabits = [...habits];
 		updatedHabits[habitId].habitHistory[idx].completed =
@@ -48,7 +57,11 @@ function App() {
 	return (
 		<div className="d-flex justify-content-center flex-column">
 			{/* Top Element showing heading and dates */}
-			<HabitHeader dates={generateCalendar(30)} />
+			<HabitHeader
+				dates={generateCalendar(30)}
+				dateIndex={dateIndex}
+				adjustDateIndex={adjustDateIndex}
+			/>
 			{/* Will loop through habit cards to display, depending on how many habits are being tracked */}
 			{habits.map((habit, idx) => {
 				return (
@@ -59,6 +72,7 @@ function App() {
 						color={habit.color}
 						history={habit.habitHistory}
 						updateHabitsHistory={updateHabitsHistory}
+						dateIndex={dateIndex}
 					/>
 				);
 			})}

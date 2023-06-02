@@ -2,9 +2,16 @@ import { useEffect, useState } from "react";
 import "./HabitCard.css";
 import "../../variables.css";
 
-function HabitCard({ habitId, name, color, history, updateHabitsHistory }) {
+function HabitCard({
+	habitId,
+	name,
+	color,
+	history,
+	updateHabitsHistory,
+	dateIndex,
+}) {
 	const toggleState = (idx) => {
-		updateHabitsHistory(habitId, idx);
+		updateHabitsHistory(habitId, dateIndex + idx);
 	};
 
 	return (
@@ -12,24 +19,27 @@ function HabitCard({ habitId, name, color, history, updateHabitsHistory }) {
 			<h2 className="habit-name" style={{ color: color }}>
 				{name}
 			</h2>
+			<i className="fa-solid fa-caret-left hidden"></i>
 			<div className="history-container">
-				{history.slice(0, 5).map((state, idx) => {
+				{history.slice(dateIndex, dateIndex + 5).map((state, idx) => {
 					return state.completed ? (
 						<i
 							className="fa-solid fa-check check-mark"
-							key={idx}
+							key={idx + dateIndex}
 							style={{ color: color }}
 							onClick={() => toggleState(idx)}
 						></i>
 					) : (
 						<i
 							className="fa-solid fa-xmark x-mark"
-							key={idx}
+							key={idx + dateIndex}
 							onClick={() => toggleState(idx)}
 						></i>
 					);
 				})}
 			</div>
+
+			<i className="fa-solid fa-caret-right hidden"></i>
 		</div>
 	);
 }

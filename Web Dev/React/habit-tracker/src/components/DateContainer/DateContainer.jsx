@@ -4,7 +4,6 @@ import "../../variables.css";
 import getDayName from "../../utils/getDayName";
 
 function DateContainer({ dateString }) {
-	console.log(dateString);
 	return (
 		<>
 			<span className="date-container">

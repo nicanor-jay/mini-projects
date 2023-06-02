@@ -16,7 +16,6 @@ const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
 
 	const handleHabitNameChange = (event) => {
 		setHabitName(event.target.value);
-		console.log(habitName);
 	};
 
 	const handleKeyDown = (event) => {
