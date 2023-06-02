@@ -3,6 +3,7 @@ import "./App.css";
 import HabitHeader from "./components/HabitHeader/HabitHeader.jsx";
 import HabitCard from "./components/HabitCard/HabitCard.jsx";
 import generateHistory from "./utils/generateHistory";
+import AddHabitModal from "./components/ModalDialog/AddHabitModal";
 import "./variables.css";
 import generateCalendar from "./utils/generateCalendar";
 
@@ -61,12 +62,12 @@ function App() {
 					/>
 				);
 			})}
-			<button
-				className="btn btn-primary"
-				onClick={() => addHabit("hi", "#ff67ea")}
-			>
-				<i className="fa-solid fa-plus"></i> Add Habit
-			</button>
+			<AddHabitModal
+				CTA="Add Habit"
+				icon={<i className="fa-solid fa-plus"></i>}
+				title="Add Habit"
+				addHabit={addHabit}
+			/>
 		</div>
 	);
 }

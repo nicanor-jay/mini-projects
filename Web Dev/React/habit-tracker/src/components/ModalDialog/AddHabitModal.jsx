@@ -1,0 +1,87 @@
+import React, { useState } from "react";
+import "./AddHabitModal.css";
+import "../../variables.css";
+
+const ModalDialog = ({ CTA, icon = null, title, addHabit }) => {
+	const [open, setOpen] = useState(false);
+	const [habitName, setHabitName] = useState("");
+	const [color, setColor] = useState("");
+
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleHabitNameChange = (event) => {
+		setHabitName(event.target.value);
+		console.log(habitName);
+	};
+
+	const handleColorChange = (event) => {
+		setColor(event.target.value);
+	};
+
+	const handleSubmit = () => {
+		if (habitName == "" || color == "") {
+			return;
+		}
+		addHabit(habitName, color);
+		handleClose();
+	};
+
+	return (
+		<div className="d-flex justify-content-center align-items-center mt-1">
+			<button onClick={() => setOpen(true)} className="root-add-button">
+				{CTA} {icon}
+			</button>
+			{open && (
+				<div className="modal-dialog">
+					<div className="modal-content">
+						<div className="modal-header">
+							<h5 className="modal-title">{title}</h5>
+							<button
+								type="button"
+								className="close"
+								data-dismiss="modal"
+								onClick={handleClose}
+							>
+								<span>&times;</span>
+							</button>
+						</div>
+						<div className="modal-body">
+							<form className="modal-form">
+								<label htmlFor="habitName">Habit Name</label>
+								<input
+									type="text"
+									id="habitName"
+									onChange={handleHabitNameChange}
+								/>
+								<label htmlFor="habitName">Colour</label>
+								<select name="color" onChange={handleColorChange}>
+									<option value="">Select an option</option>
+									<option value="#FF0000">Red</option>
+									<option value="#00FF00">Green</option>
+									<option value="#0000FF">Blue</option>
+									<option value="#A020F0">Purple</option>
+									<option value="#FFA500">Orange</option>
+									<option value="#FFFF00">Yellow</option>
+									<option value="#000000">Black</option>
+								</select>
+							</form>
+						</div>
+						<div className="modal-footer">
+							<button
+								type="submit"
+								className="modal-add-button"
+								onClick={handleSubmit}
+							>
+								Add Habit
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
+		</div>
+	);
+};
+
+export default ModalDialog;
