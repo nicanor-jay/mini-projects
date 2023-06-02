@@ -7,6 +7,7 @@ import "./ViewHabitModal.css";
 import "../../variables.css";
 import "../../utils/getPercentageCompleted";
 import getPercentageCompleted from "../../utils/getPercentageCompleted";
+import PercentageChip from "../PercentageChip/PercentageChip";
 
 const ViewHabitModal = ({
 	habit,
@@ -17,6 +18,7 @@ const ViewHabitModal = ({
 		setCurrentlyViewedHabit(null);
 		setIsViewingHabit(false);
 	};
+
 	return (
 		<div className="d-flex justify-content-center align-items-center mt-1">
 			{open && (
@@ -32,19 +34,38 @@ const ViewHabitModal = ({
 								data-dismiss="modal"
 								onClick={handleClose}
 							>
-								<span>&times;</span>
+								<i className="fa-solid fa-xmark"></i>
 							</button>
 						</div>
 						<div className="modal-body">
 							<div className="percentages-container">
+								<PercentageChip
+									percentage={getPercentageCompleted(
+										habit.habitHistory,
+										"week"
+									)}
+									description="last 7 days"
+									color={habit.color}
+								/>
 								<span>
-									{getPercentageCompleted(habit.habitHistory, "week")}%
+									<PercentageChip
+										percentage={getPercentageCompleted(
+											habit.habitHistory,
+											"month"
+										)}
+										description="last month"
+										color={habit.color}
+									/>
 								</span>
 								<span>
-									{getPercentageCompleted(habit.habitHistory, "month")}%
-								</span>
-								<span>
-									{getPercentageCompleted(habit.habitHistory, "lifetime")}%
+									<PercentageChip
+										percentage={getPercentageCompleted(
+											habit.habitHistory,
+											"lifetime"
+										)}
+										description="lifetime"
+										color={habit.color}
+									/>
 								</span>
 							</div>
 						</div>

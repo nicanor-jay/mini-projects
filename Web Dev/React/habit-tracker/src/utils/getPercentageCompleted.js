@@ -1,21 +1,25 @@
 function getPercentageCompleted(habitHistory, timeframe) {
 	const today = new Date();
 	let timeLimit = null;
+	let filteredHistory;
 
 	if (timeframe === "week") {
-		timeLimit = new Date(today.setDate(today.getDate() - 7)); // Calculate the date one week ago
+		filteredHistory = habitHistory.slice(0, 7);
 	} else if (timeframe === "month") {
-		timeLimit = new Date(today.setMonth(today.getMonth() - 1)); // Calculate the date one month ago
+		filteredHistory = habitHistory.slice(0, 30);
+	} else if (timeframe === "lifetime") {
+		filteredHistory = habitHistory;
 	}
 
-	const filteredHistory = timeLimit
-		? habitHistory.filter((entry) => new Date(entry.date) >= timeLimit)
-		: habitHistory;
+	console.log(filteredHistory);
 
 	const totalEntries = filteredHistory.length;
 	const completedEntries = filteredHistory.filter(
 		(entry) => entry.completed
 	).length;
+
+	console.log(totalEntries);
+	console.log(completedEntries);
 
 	if (totalEntries === 0) {
 		return 0; // Handle the case when the filtered habit history is empty

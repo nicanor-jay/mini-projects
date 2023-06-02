@@ -13,17 +13,17 @@ function App() {
 		{
 			habitName: "Workout",
 			color: "#7A3F92",
-			habitHistory: generateHistory(30),
+			habitHistory: generateHistory(45),
 		},
 		{
 			habitName: "Drink Water",
 			color: "#E84C1A",
-			habitHistory: generateHistory(30),
+			habitHistory: generateHistory(45),
 		},
 		{
 			habitName: "Wake up early",
 			color: "#41B9A8",
-			habitHistory: generateHistory(30),
+			habitHistory: generateHistory(45),
 		},
 	]);
 	const [dateIndex, setDateIndex] = useState(0);
@@ -31,7 +31,7 @@ function App() {
 	const [currentlyViewedHabit, setCurrentlyViewedHabit] = useState(null);
 
 	const handleHabitClick = (idx) => {
-		setCurrentlyViewedHabit(idx);
+		setCurrentlyViewedHabit(habits[idx]);
 		setIsViewingHabit(!isViewingHabit);
 	};
 
@@ -92,7 +92,7 @@ function App() {
 			/>
 			{isViewingHabit && (
 				<ViewHabitModal
-					habit={habits[currentlyViewedHabit]}
+					habit={currentlyViewedHabit}
 					setCurrentlyViewedHabit={setCurrentlyViewedHabit}
 					setIsViewingHabit={setIsViewingHabit}
 				/>

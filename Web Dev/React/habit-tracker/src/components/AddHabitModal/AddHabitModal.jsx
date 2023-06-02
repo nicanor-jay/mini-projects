@@ -64,7 +64,7 @@ const AddHabitModal = ({ CTA, icon = null, title, addHabit }) => {
 								data-dismiss="modal"
 								onClick={handleClose}
 							>
-								<span>&times;</span>
+								<i className="fa-solid fa-xmark"></i>
 							</button>
 						</div>
 						<div className="modal-body">
