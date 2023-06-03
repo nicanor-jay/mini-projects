@@ -50,9 +50,11 @@ const AddHabitModal = ({ CTA, icon = null, title, addHabit }) => {
 
 	return (
 		<div className="d-flex justify-content-center align-items-center mt-1">
-			<button onClick={() => setOpen(true)} className="root-add-button">
-				{CTA} {icon}
-			</button>
+			{!open && (
+				<button onClick={() => setOpen(true)} className="root-add-button">
+					{CTA} {icon}
+				</button>
+			)}
 			{open && (
 				<div className="modal-dialog">
 					<div className="modal-content">

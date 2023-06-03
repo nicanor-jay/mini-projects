@@ -1,8 +1,4 @@
-import React, {
-	useState,
-	setIsViewingHabit,
-	setCurrentlyViewedHabit,
-} from "react";
+import React, { useState } from "react";
 import "./ViewHabitModal.css";
 import "../../variables.css";
 import "../../utils/getPercentageCompleted";
@@ -12,11 +8,34 @@ import PercentageChip from "../PercentageChip/PercentageChip";
 const ViewHabitModal = ({
 	habit,
 	setCurrentlyViewedHabit,
+	currentlyViewedHabitId,
 	setIsViewingHabit,
+	updateHabitName,
 }) => {
+	const [isEditingHabitName, setIsEditingHabitName] = useState(false);
+	const [habitName, setHabitName] = useState(habit.habitName);
+
 	const handleClose = () => {
 		setCurrentlyViewedHabit(null);
 		setIsViewingHabit(false);
+	};
+	const handleChange = (event) => {
+		setHabitName(event.target.value);
+	};
+	const submitNameChange = () => {
+		updateHabitName(currentlyViewedHabitId, habitName);
+		setIsEditingHabitName(!isEditingHabitName);
+	};
+
+	const handleKeyDown = (event) => {
+		if (event.keyCode === 13) {
+			// Call your function here
+			submitNameChange();
+		}
+	};
+
+	const handleClick = () => {
+		setIsEditingHabitName(!isEditingHabitName);
 	};
 
 	return (
@@ -25,9 +44,27 @@ const ViewHabitModal = ({
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
-							<h5 className="modal-title" style={{ color: habit.color }}>
-								{habit.habitName} <i className="fa-solid fa-pencil"></i>
-							</h5>
+							{isEditingHabitName ? (
+								<div className="modal-edit-container">
+									<input
+										type="text"
+										value={habitName}
+										onKeyDown={handleKeyDown}
+										onChange={handleChange}
+									></input>
+									<button onClick={submitNameChange}>
+										<i className="fa-solid fa-check"></i>
+									</button>
+								</div>
+							) : (
+								<h5 className="modal-title" style={{ color: habit.color }}>
+									{habitName}{" "}
+									<i
+										className="fa-solid fa-pencil clickable"
+										onClick={handleClick}
+									></i>
+								</h5>
+							)}
 							<button
 								type="button"
 								className="close"
