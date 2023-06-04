@@ -41,8 +41,8 @@ const ViewHabitModal = ({
 	return (
 		<div className="d-flex justify-content-center align-items-center mt-1">
 			{open && (
-				<div className="modal-dialog">
-					<div className="modal-content">
+				<div className="modal-dialog modal-dialog-centered">
+					<div className="modal-content d-flex flex-column view-habit-modal">
 						<div className="modal-header">
 							{isEditingHabitName ? (
 								<div className="modal-edit-container">

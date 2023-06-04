@@ -101,7 +101,6 @@ function App() {
 			<AddHabitModal
 				CTA="Add Habit"
 				icon={<i className="fa-solid fa-plus"></i>}
-				title="Add Habit"
 				addHabit={addHabit}
 			/>
 			{isViewingHabit && (
