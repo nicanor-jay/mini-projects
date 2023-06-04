@@ -21,6 +21,8 @@ function HabitCard({
 				className="habit-name"
 				style={{ color: color }}
 				onClick={() => onClick(habitId)}
+				data-toggle="modal"
+				data-target="#viewHabitModal"
 			>
 				{name}
 			</h2>

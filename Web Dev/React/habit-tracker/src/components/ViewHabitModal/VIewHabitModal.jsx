@@ -39,8 +39,15 @@ const ViewHabitModal = ({
 	};
 
 	return (
-		<div className="d-flex justify-content-center align-items-center mt-1">
-			{open && (
+		<>
+			<div
+				className="modal fade"
+				id="viewHabitModal"
+				tabIndex="-1"
+				role="dialog"
+				aria-labelledby="viewHabitModalLabel"
+				aria-hidden="false"
+			>
 				<div className="modal-dialog modal-dialog-centered">
 					<div className="modal-content d-flex flex-column view-habit-modal">
 						<div className="modal-header">
@@ -109,8 +116,80 @@ const ViewHabitModal = ({
 						<div className="modal-footer"></div>
 					</div>
 				</div>
-			)}
-		</div>
+			</div>
+		</>
+		// <div className="d-flex justify-content-center align-items-center mt-1">
+		// 	{open && (
+		// 		<div className="modal-dialog modal-dialog-centered">
+		// 			<div className="modal-content d-flex flex-column view-habit-modal">
+		// 				<div className="modal-header">
+		// 					{isEditingHabitName ? (
+		// 						<div className="modal-edit-container">
+		// 							<input
+		// 								type="text"
+		// 								value={habitName}
+		// 								onKeyDown={handleKeyDown}
+		// 								onChange={handleChange}
+		// 							></input>
+		// 							<button onClick={submitNameChange}>
+		// 								<i className="fa-solid fa-check"></i>
+		// 							</button>
+		// 						</div>
+		// 					) : (
+		// 						<h5 className="modal-title" style={{ color: habit.color }}>
+		// 							{habitName}{" "}
+		// 							<i
+		// 								className="fa-solid fa-pencil clickable"
+		// 								onClick={handleClick}
+		// 							></i>
+		// 						</h5>
+		// 					)}
+		// 					<button
+		// 						type="button"
+		// 						className="close"
+		// 						data-dismiss="modal"
+		// 						onClick={handleClose}
+		// 					>
+		// 						<i className="fa-solid fa-xmark"></i>
+		// 					</button>
+		// 				</div>
+		// 				<div className="modal-body">
+		// 					<div className="percentages-container">
+		// 						<PercentageChip
+		// 							percentage={getPercentageCompleted(
+		// 								habit.habitHistory,
+		// 								"week"
+		// 							)}
+		// 							description="last 7 days"
+		// 							color={habit.color}
+		// 						/>
+		// 						<span>
+		// 							<PercentageChip
+		// 								percentage={getPercentageCompleted(
+		// 									habit.habitHistory,
+		// 									"month"
+		// 								)}
+		// 								description="last month"
+		// 								color={habit.color}
+		// 							/>
+		// 						</span>
+		// 						<span>
+		// 							<PercentageChip
+		// 								percentage={getPercentageCompleted(
+		// 									habit.habitHistory,
+		// 									"lifetime"
+		// 								)}
+		// 								description="lifetime"
+		// 								color={habit.color}
+		// 							/>
+		// 						</span>
+		// 					</div>
+		// 				</div>
+		// 				<div className="modal-footer"></div>
+		// 			</div>
+		// 		</div>
+		// 	)}
+		// </div>
 	);
 };
 
