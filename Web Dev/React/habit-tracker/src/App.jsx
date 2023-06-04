@@ -29,9 +29,16 @@ function App() {
 	const [dateIndex, setDateIndex] = useState(0);
 	const [isViewingHabit, setIsViewingHabit] = useState(false);
 	const [currentlyViewedHabit, setCurrentlyViewedHabit] = useState(null);
+	const [currentlyViewedHabitId, setCurrentlyViewedHabitId] = useState(null);
 
 	const handleHabitClick = (idx) => {
-		setCurrentlyViewedHabit(habits[idx]);
+		if (!isViewingHabit) {
+			setCurrentlyViewedHabit(habits[idx]);
+			setCurrentlyViewedHabitId(idx);
+		} else {
+			setCurrentlyViewedHabit(null);
+			setCurrentlyViewedHabitId(null);
+		}
 		setIsViewingHabit(!isViewingHabit);
 	};
 
@@ -46,6 +53,13 @@ function App() {
 		let updatedHabits = [...habits];
 		updatedHabits[habitId].habitHistory[idx].completed =
 			!habits[habitId].habitHistory[idx].completed;
+
+		setHabits(updatedHabits);
+	};
+
+	const updateHabitName = (habitId, newName) => {
+		let updatedHabits = [...habits];
+		updatedHabits[habitId].habitName = newName;
 
 		setHabits(updatedHabits);
 	};
@@ -87,14 +101,15 @@ function App() {
 			<AddHabitModal
 				CTA="Add Habit"
 				icon={<i className="fa-solid fa-plus"></i>}
-				title="Add Habit"
 				addHabit={addHabit}
 			/>
 			{isViewingHabit && (
 				<ViewHabitModal
 					habit={currentlyViewedHabit}
 					setCurrentlyViewedHabit={setCurrentlyViewedHabit}
+					currentlyViewedHabitId={currentlyViewedHabitId}
 					setIsViewingHabit={setIsViewingHabit}
+					updateHabitName={updateHabitName}
 				/>
 			)}
 		</div>

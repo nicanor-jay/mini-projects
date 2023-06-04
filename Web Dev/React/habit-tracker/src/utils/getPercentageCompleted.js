@@ -11,15 +11,10 @@ function getPercentageCompleted(habitHistory, timeframe) {
 		filteredHistory = habitHistory;
 	}
 
-	console.log(filteredHistory);
-
 	const totalEntries = filteredHistory.length;
 	const completedEntries = filteredHistory.filter(
 		(entry) => entry.completed
 	).length;
-
-	console.log(totalEntries);
-	console.log(completedEntries);
 
 	if (totalEntries === 0) {
 		return 0; // Handle the case when the filtered habit history is empty

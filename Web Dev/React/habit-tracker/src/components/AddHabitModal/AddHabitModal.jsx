@@ -3,13 +3,11 @@ import "./AddHabitModal.css";
 import "../../variables.css";
 import ColorOption from "../ColorOption/ColorOption.jsx";
 
-const AddHabitModal = ({ CTA, icon = null, title, addHabit }) => {
-	const [open, setOpen] = useState(false);
+const AddHabitModal = ({ CTA, icon = null, addHabit }) => {
 	const [habitName, setHabitName] = useState("");
 	const [color, setColor] = useState("");
 
 	const handleClose = () => {
-		setOpen(false);
 		setHabitName("");
 		setColor("");
 	};
@@ -50,14 +48,27 @@ const AddHabitModal = ({ CTA, icon = null, title, addHabit }) => {
 
 	return (
 		<div className="d-flex justify-content-center align-items-center mt-1">
-			<button onClick={() => setOpen(true)} className="root-add-button">
-				{CTA} {icon}
+			<button
+				className="root-add-button"
+				type="button"
+				data-toggle="modal"
+				data-target="#addHabitModal"
+			>
+				{CTA} {icon}{" "}
 			</button>
-			{open && (
-				<div className="modal-dialog">
-					<div className="modal-content">
+
+			<div
+				className="modal fade"
+				id="addHabitModal"
+				tabIndex="-1"
+				role="dialog"
+				aria-labelledby="addHabitModalLabel"
+				aria-hidden="true"
+			>
+				<div className="modal-dialog modal-dialog-centered" role="document">
+					<div className="modal-content d-flex flex-column add-habit-modal">
 						<div className="modal-header">
-							<h5 className="modal-title">{title}</h5>
+							<h3 className="modal-title">Add Title</h3>
 							<button
 								type="button"
 								className="close"
@@ -75,11 +86,11 @@ const AddHabitModal = ({ CTA, icon = null, title, addHabit }) => {
 									id="habitName"
 									onChange={handleHabitNameChange}
 									onKeyDown={handleKeyDown}
+									value={habitName}
 								/>
 								<label htmlFor="habitName">Colour</label>
-								<select name="color" onChange={handleColorChange}>
+								<select name="color" onChange={handleColorChange} value={color}>
 									<option value="">Select an option</option>
-
 									{Object.entries(colorOptions).map(([colorCode, label]) => (
 										<ColorOption
 											label={label}
@@ -95,13 +106,14 @@ const AddHabitModal = ({ CTA, icon = null, title, addHabit }) => {
 								type="submit"
 								className="modal-add-button"
 								onClick={handleSubmit}
+								data-dismiss={habitName == "" || color == "" ? null : "modal"}
 							>
 								Add Habit
 							</button>
 						</div>
 					</div>
 				</div>
-			)}
+			</div>
 		</div>
 	);
 };
