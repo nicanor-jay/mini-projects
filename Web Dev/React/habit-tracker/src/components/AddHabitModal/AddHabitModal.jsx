@@ -2,14 +2,39 @@ import React, { useState } from "react";
 import "./AddHabitModal.css";
 import "../../variables.css";
 import ColorOption from "../ColorOption/ColorOption.jsx";
+import firebase from "../../utils/firebase.js";
+import generateCalendar from "../../utils/generateCalendar";
+import generateHistory from "../../utils/generateHistory";
 
 const AddHabitModal = ({ CTA, icon = null, addHabit }) => {
 	const [habitName, setHabitName] = useState("");
 	const [color, setColor] = useState("");
 
+	const firestore = firebase.firestore();
+	const habitsRef = firestore.collection("habits");
+	const query = habitsRef.orderBy("createdAt");
+
+	const addHabitToFirestore = async (e) => {
+		await habitsRef.add({
+			habitName: habitName,
+			habitColor: color,
+			habitHistory: generateHistory(30),
+			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+		});
+	};
+
 	const handleClose = () => {
 		setHabitName("");
 		setColor("");
+	};
+
+	const handleSubmit = () => {
+		if (habitName == "" || color == "") {
+			return;
+		}
+		// addHabit(habitName, color);
+		addHabitToFirestore();
+		handleClose();
 	};
 
 	const handleHabitNameChange = (event) => {
@@ -26,14 +51,6 @@ const AddHabitModal = ({ CTA, icon = null, addHabit }) => {
 
 	const handleColorChange = (event) => {
 		setColor(event.target.value);
-	};
-
-	const handleSubmit = () => {
-		if (habitName == "" || color == "") {
-			return;
-		}
-		addHabit(habitName, color);
-		handleClose();
 	};
 
 	const colorOptions = {

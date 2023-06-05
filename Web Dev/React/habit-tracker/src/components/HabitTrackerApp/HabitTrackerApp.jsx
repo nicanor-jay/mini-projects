@@ -7,28 +7,39 @@ import ViewHabitModal from "../ViewHabitModal/ViewHabitModal.jsx";
 import HabitHeader from "../HabitHeader/HabitHeader.jsx";
 import generateCalendar from "../../utils/generateCalendar";
 
+import firebase from "../../utils/firebase.js";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { getFirestore, collection } from "firebase/firestore";
+
 function HabitTrackerApp() {
-	const [habits, setHabits] = useState([
-		{
-			habitName: "Workout",
-			color: "#7A3F92",
-			habitHistory: generateHistory(45),
-		},
-		{
-			habitName: "Drink Water",
-			color: "#E84C1A",
-			habitHistory: generateHistory(45),
-		},
-		{
-			habitName: "Wake up early",
-			color: "#41B9A8",
-			habitHistory: generateHistory(45),
-		},
-	]);
+	// const [habits, setHabits] = useState([
+	// 	{
+	// 		habitName: "Workout",
+	// 		color: "#7A3F92",
+	// 		habitHistory: generateHistory(45),
+	// 	},
+	// 	{
+	// 		habitName: "Drink Water",
+	// 		color: "#E84C1A",
+	// 		habitHistory: generateHistory(45),
+	// 	},
+	// 	{
+	// 		habitName: "Wake up early",
+	// 		color: "#41B9A8",
+	// 		habitHistory: generateHistory(45),
+	// 	},
+	// ]);
 	const [dateIndex, setDateIndex] = useState(0);
 	const [isViewingHabit, setIsViewingHabit] = useState(false);
 	const [currentlyViewedHabit, setCurrentlyViewedHabit] = useState(null);
 	const [currentlyViewedHabitId, setCurrentlyViewedHabitId] = useState(null);
+
+	//firebase connections
+	const firestore = firebase.firestore();
+	const habitsRef = firestore.collection("habits");
+	const query = habitsRef.orderBy("createdAt");
+
+	const [habits, loading, error] = useCollectionData(query, { idField: "id" });
 
 	const handleHabitClick = (idx) => {
 		if (!isViewingHabit) {
@@ -83,20 +94,23 @@ function HabitTrackerApp() {
 				adjustDateIndex={adjustDateIndex}
 			/>
 			{/* Will loop through habit cards to display, depending on how many habits are being tracked */}
-			{habits.map((habit, idx) => {
-				return (
-					<HabitCard
-						habitId={idx}
-						key={idx}
-						name={habit.habitName}
-						color={habit.color}
-						history={habit.habitHistory}
-						updateHabitsHistory={updateHabitsHistory}
-						dateIndex={dateIndex}
-						onClick={(idx) => handleHabitClick(idx)}
-					/>
-				);
-			})}
+			{error && <strong>Error: {JSON.stringify(error)}</strong>}
+			{loading && <span>Collection: Loading...</span>}
+			{habits &&
+				habits.map((habit, idx) => {
+					return (
+						<HabitCard
+							habitId={idx}
+							key={idx}
+							name={habit.habitName}
+							color={habit.habitColor}
+							history={habit.habitHistory}
+							updateHabitsHistory={updateHabitsHistory}
+							dateIndex={dateIndex}
+							onClick={(idx) => handleHabitClick(idx)}
+						/>
+					);
+				})}
 			<AddHabitModal
 				CTA="Add Habit"
 				icon={<i className="fa-solid fa-plus"></i>}
