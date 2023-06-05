@@ -11,11 +11,15 @@ const AddHabitModal = ({ CTA, icon = null, addHabit }) => {
 	const [color, setColor] = useState("");
 
 	const firestore = firebase.firestore();
+	const auth = firebase.auth();
 	const habitsRef = firestore.collection("habits");
 	const query = habitsRef.orderBy("createdAt");
 
 	const addHabitToFirestore = async (e) => {
+		const { uid, photoURL } = auth.currentUser;
+
 		await habitsRef.add({
+			uid,
 			habitName: habitName,
 			habitColor: color,
 			habitHistory: generateHistory(30),
