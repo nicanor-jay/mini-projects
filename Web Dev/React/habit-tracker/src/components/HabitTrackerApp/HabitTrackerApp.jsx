@@ -8,27 +8,10 @@ import HabitHeader from "../HabitHeader/HabitHeader.jsx";
 import generateCalendar from "../../utils/generateCalendar";
 
 import firebase from "../../utils/firebase.js";
-import { useCollectionData } from "react-firebase-hooks/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 import { getFirestore, collection } from "firebase/firestore";
 
 function HabitTrackerApp() {
-	// const [habits, setHabits] = useState([
-	// 	{
-	// 		habitName: "Workout",
-	// 		color: "#7A3F92",
-	// 		habitHistory: generateHistory(45),
-	// 	},
-	// 	{
-	// 		habitName: "Drink Water",
-	// 		color: "#E84C1A",
-	// 		habitHistory: generateHistory(45),
-	// 	},
-	// 	{
-	// 		habitName: "Wake up early",
-	// 		color: "#41B9A8",
-	// 		habitHistory: generateHistory(45),
-	// 	},
-	// ]);
 	const [dateIndex, setDateIndex] = useState(0);
 	const [isViewingHabit, setIsViewingHabit] = useState(false);
 	const [currentlyViewedHabit, setCurrentlyViewedHabit] = useState(null);
@@ -38,12 +21,11 @@ function HabitTrackerApp() {
 	const firestore = firebase.firestore();
 	const habitsRef = firestore.collection("habits");
 	const query = habitsRef.orderBy("createdAt");
-
-	const [habits, loading, error] = useCollectionData(query, { idField: "id" });
+	const [habits, loading, error] = useCollection(query);
 
 	const handleHabitClick = (idx) => {
 		if (!isViewingHabit) {
-			setCurrentlyViewedHabit(habits[idx]);
+			setCurrentlyViewedHabit(habits.docs.find((doc) => doc.id === idx).data());
 			setCurrentlyViewedHabitId(idx);
 		} else {
 			setCurrentlyViewedHabit(null);
@@ -63,13 +45,6 @@ function HabitTrackerApp() {
 		let updatedHabits = [...habits];
 		updatedHabits[habitId].habitHistory[idx].completed =
 			!habits[habitId].habitHistory[idx].completed;
-
-		setHabits(updatedHabits);
-	};
-
-	const updateHabitName = (habitId, newName) => {
-		let updatedHabits = [...habits];
-		updatedHabits[habitId].habitName = newName;
 
 		setHabits(updatedHabits);
 	};
@@ -97,18 +72,21 @@ function HabitTrackerApp() {
 			{error && <strong>Error: {JSON.stringify(error)}</strong>}
 			{loading && <span>Collection: Loading...</span>}
 			{habits &&
-				habits.map((habit, idx) => {
+				habits.docs.map((doc, idx) => {
+					let habit = doc.data();
 					return (
-						<HabitCard
-							habitId={idx}
-							key={idx}
-							name={habit.habitName}
-							color={habit.habitColor}
-							history={habit.habitHistory}
-							updateHabitsHistory={updateHabitsHistory}
-							dateIndex={dateIndex}
-							onClick={(idx) => handleHabitClick(idx)}
-						/>
+						<>
+							<HabitCard
+								habitId={doc.id}
+								key={idx}
+								name={habit.habitName}
+								color={habit.habitColor}
+								history={habit.habitHistory}
+								updateHabitsHistory={updateHabitsHistory}
+								dateIndex={dateIndex}
+								onClick={(idx) => handleHabitClick(idx)}
+							/>
+						</>
 					);
 				})}
 			<AddHabitModal
@@ -122,7 +100,6 @@ function HabitTrackerApp() {
 					setCurrentlyViewedHabit={setCurrentlyViewedHabit}
 					currentlyViewedHabitId={currentlyViewedHabitId}
 					setIsViewingHabit={setIsViewingHabit}
-					updateHabitName={updateHabitName}
 				/>
 			)}
 		</div>

@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import "./ViewHabitModal.css";
 import "../../variables.css";
 import "../../utils/getPercentageCompleted";
+import firebase from "../../utils/firebase.js";
 import getPercentageCompleted from "../../utils/getPercentageCompleted";
 import PercentageChip from "../PercentageChip/PercentageChip";
+
+import { doc, deleteDoc } from "firebase/firestore";
 
 const ViewHabitModal = ({
 	habit,
 	setCurrentlyViewedHabit,
 	currentlyViewedHabitId,
 	setIsViewingHabit,
-	updateHabitName,
 }) => {
 	const [isEditingHabitName, setIsEditingHabitName] = useState(false);
 	const [habitName, setHabitName] = useState(habit.habitName);
+	const firestore = firebase.firestore();
 
 	const handleClose = () => {
 		setCurrentlyViewedHabit(null);
@@ -27,11 +30,24 @@ const ViewHabitModal = ({
 		setIsEditingHabitName(!isEditingHabitName);
 	};
 
+	const updateHabitName = (habitId, newName) => {
+		let updatedHabits = [...habits];
+		updatedHabits[habitId].habitName = newName;
+
+		setHabits(updatedHabits);
+	};
+
 	const handleKeyDown = (event) => {
 		if (event.keyCode === 13) {
 			// Call your function here
 			submitNameChange();
 		}
+	};
+
+	const deleteHabit = async () => {
+		handleClose();
+		const ref = doc(firestore, "habits", currentlyViewedHabitId);
+		await deleteDoc(ref);
 	};
 
 	const handleClick = () => {
@@ -59,12 +75,12 @@ const ViewHabitModal = ({
 										onKeyDown={handleKeyDown}
 										onChange={handleChange}
 									></input>
-									<button onClick={submitNameChange}>
+									<button onClick={updateHabitName}>
 										<i className="fa-solid fa-check"></i>
 									</button>
 								</div>
 							) : (
-								<h5 className="modal-title" style={{ color: habit.color }}>
+								<h5 className="modal-title" style={{ color: habit.habitColor }}>
 									{habitName}{" "}
 									<i
 										className="fa-solid fa-pencil clickable"
@@ -89,7 +105,7 @@ const ViewHabitModal = ({
 										"week"
 									)}
 									description="last 7 days"
-									color={habit.color}
+									color={habit.habitColor}
 								/>
 								<span>
 									<PercentageChip
@@ -98,7 +114,7 @@ const ViewHabitModal = ({
 											"month"
 										)}
 										description="last month"
-										color={habit.color}
+										color={habit.habitColor}
 									/>
 								</span>
 								<span>
@@ -108,12 +124,20 @@ const ViewHabitModal = ({
 											"lifetime"
 										)}
 										description="lifetime"
-										color={habit.color}
+										color={habit.habitColor}
 									/>
 								</span>
 							</div>
 						</div>
-						<div className="modal-footer"></div>
+						<div className="modal-footer">
+							<button
+								className="btn btn-danger"
+								data-dismiss="modal"
+								onClick={deleteHabit}
+							>
+								Delete Habit
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
