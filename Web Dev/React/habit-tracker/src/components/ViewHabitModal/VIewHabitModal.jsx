@@ -6,7 +6,7 @@ import firebase from "../../utils/firebase.js";
 import getPercentageCompleted from "../../utils/getPercentageCompleted";
 import PercentageChip from "../PercentageChip/PercentageChip";
 
-import { doc, deleteDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, getDoc } from "firebase/firestore";
 
 const ViewHabitModal = ({
 	habit,
@@ -26,15 +26,18 @@ const ViewHabitModal = ({
 		setHabitName(event.target.value);
 	};
 	const submitNameChange = () => {
-		updateHabitName(currentlyViewedHabitId, habitName);
+		updateHabitName();
 		setIsEditingHabitName(!isEditingHabitName);
 	};
 
-	const updateHabitName = (habitId, newName) => {
-		let updatedHabits = [...habits];
-		updatedHabits[habitId].habitName = newName;
+	const updateHabitName = async () => {
+		// let updatedHabits = [...habits];
+		// updatedHabits[habitId].habitName = newName;
+		// setHabits(updatedHabits);
 
-		setHabits(updatedHabits);
+		const ref = doc(firestore, "habits", currentlyViewedHabitId);
+		const habitSnap = await getDoc(ref);
+		await updateDoc(ref, { habitName: habitName });
 	};
 
 	const handleKeyDown = (event) => {
@@ -75,7 +78,7 @@ const ViewHabitModal = ({
 										onKeyDown={handleKeyDown}
 										onChange={handleChange}
 									></input>
-									<button onClick={updateHabitName}>
+									<button onClick={submitNameChange}>
 										<i className="fa-solid fa-check"></i>
 									</button>
 								</div>
