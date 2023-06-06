@@ -5,13 +5,14 @@ import ColorOption from "../ColorOption/ColorOption.jsx";
 import firebase from "../../utils/firebase.js";
 import generateCalendar from "../../utils/generateCalendar";
 import generateHistory from "../../utils/generateHistory";
+import { getAuth } from "firebase/auth";
 
 const AddHabitModal = ({ CTA, icon = null, addHabit }) => {
 	const [habitName, setHabitName] = useState("");
 	const [color, setColor] = useState("");
 
 	const firestore = firebase.firestore();
-	const auth = firebase.auth();
+	const auth = getAuth();
 	const habitsRef = firestore.collection("habits");
 	const query = habitsRef.orderBy("createdAt");
 

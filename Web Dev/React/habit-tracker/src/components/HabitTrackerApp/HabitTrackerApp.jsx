@@ -20,7 +20,8 @@ function HabitTrackerApp() {
 	//firebase connections
 	const firestore = firebase.firestore();
 	const habitsRef = firestore.collection("habits");
-	const query = habitsRef.orderBy("createdAt");
+	const query = habitsRef.where("uid", "==", firebase.auth().currentUser.uid);
+
 	const [habits, loading, error] = useCollection(query);
 
 	const handleHabitClick = (idx) => {
