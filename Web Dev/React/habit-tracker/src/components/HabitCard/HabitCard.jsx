@@ -1,18 +1,36 @@
 import { useEffect, useState } from "react";
 import "./HabitCard.css";
 import "../../variables.css";
+import firebase from "../../utils/firebase.js";
 
 function HabitCard({
 	habitId,
 	name,
 	color,
 	history,
-	updateHabitsHistory,
 	dateIndex,
-	onClick,
+	handleHabitClick,
 }) {
-	const toggleState = (idx) => {
-		updateHabitsHistory(habitId, dateIndex + idx);
+	const firestore = firebase.firestore();
+	const habitsRef = firestore.collection("habits");
+
+	const updateHabitState = (date) => {
+		const documentRef = habitsRef.doc(habitId);
+
+		const updatedHabitHistory = history.map((entry) => {
+			if (entry.date === date) {
+				// Replace with your specific date
+				return { ...entry, completed: !entry.completed }; // Toggle the boolean value
+			}
+			return entry;
+		});
+
+		documentRef
+			.update({ habitHistory: updatedHabitHistory })
+			.then(() => console.log("Toggled " + name + " " + date))
+			.catch((error) => {
+				console.log("Error toggling " + name + " " + date);
+			});
 	};
 
 	return (
@@ -20,7 +38,7 @@ function HabitCard({
 			<h2
 				className="habit-name"
 				style={{ color: color }}
-				onClick={() => onClick(habitId)}
+				onClick={() => handleHabitClick(habitId)}
 				data-toggle="modal"
 				data-target="#viewHabitModal"
 			>
@@ -34,13 +52,13 @@ function HabitCard({
 							className="fa-solid fa-check check-mark"
 							key={idx + dateIndex}
 							style={{ color: color }}
-							onClick={() => toggleState(idx)}
+							onClick={() => updateHabitState(state.date)}
 						></i>
 					) : (
 						<i
 							className="fa-solid fa-xmark x-mark"
 							key={idx + dateIndex}
-							onClick={() => toggleState(idx)}
+							onClick={() => updateHabitState(state.date)}
 						></i>
 					);
 				})}

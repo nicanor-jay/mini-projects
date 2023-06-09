@@ -31,10 +31,6 @@ const ViewHabitModal = ({
 	};
 
 	const updateHabitName = async () => {
-		// let updatedHabits = [...habits];
-		// updatedHabits[habitId].habitName = newName;
-		// setHabits(updatedHabits);
-
 		const ref = doc(firestore, "habits", currentlyViewedHabitId);
 		const habitSnap = await getDoc(ref);
 		await updateDoc(ref, { habitName: habitName });

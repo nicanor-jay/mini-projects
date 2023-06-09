@@ -7,7 +7,7 @@ import generateCalendar from "../../utils/generateCalendar";
 import generateHistory from "../../utils/generateHistory";
 import { getAuth } from "firebase/auth";
 
-const AddHabitModal = ({ CTA, icon = null, addHabit }) => {
+const AddHabitModal = ({ CTA, icon = null }) => {
 	const [habitName, setHabitName] = useState("");
 	const [color, setColor] = useState("");
 
