@@ -42,25 +42,6 @@ function HabitTrackerApp() {
 		setDateIndex(dateIndex + val);
 	};
 
-	const updateHabitsHistory = (habitId, idx) => {
-		let updatedHabits = [...habits];
-		updatedHabits[habitId].habitHistory[idx].completed =
-			!habits[habitId].habitHistory[idx].completed;
-
-		setHabits(updatedHabits);
-	};
-
-	const addHabit = (habitName, color, habitHistory = null) => {
-		let newHabit = {
-			habitName: habitName,
-			color: color,
-			habitHistory: generateHistory(30),
-		};
-
-		let updatedHabits = [...habits, newHabit];
-		setHabits(updatedHabits);
-	};
-
 	return (
 		<div className="d-flex justify-content-center flex-column">
 			{/* Top Element showing heading and dates */}
@@ -83,9 +64,8 @@ function HabitTrackerApp() {
 								name={habit.habitName}
 								color={habit.habitColor}
 								history={habit.habitHistory}
-								updateHabitsHistory={updateHabitsHistory}
 								dateIndex={dateIndex}
-								onClick={(idx) => handleHabitClick(idx)}
+								handleHabitClick={(idx) => handleHabitClick(idx)}
 							/>
 						</>
 					);
@@ -93,7 +73,6 @@ function HabitTrackerApp() {
 			<AddHabitModal
 				CTA="Add Habit"
 				icon={<i className="fa-solid fa-plus"></i>}
-				addHabit={addHabit}
 			/>
 			{isViewingHabit && (
 				<ViewHabitModal
