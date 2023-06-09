@@ -25,10 +25,18 @@ function HabitHeader({ dates, dateIndex, adjustDateIndex }) {
 					return <DateContainer dateString={date.dateString} key={idx} />;
 				})}
 			</div>
-			<i
-				className="fa-solid fa-caret-right navigate"
-				onClick={() => adjustDateIndex(1)}
-			></i>
+
+			{dateIndex + 5 == dates.length ? (
+				<i
+					className="fa-solid fa-caret-right navigate"
+					style={{ color: "gray", cursor: "default", pointerEvents: "none" }}
+				></i>
+			) : (
+				<i
+					className="fa-solid fa-caret-right navigate"
+					onClick={() => adjustDateIndex(1)}
+				></i>
+			)}
 		</div>
 	);
 }
