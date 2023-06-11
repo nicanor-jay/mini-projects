@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+* {
+	background-color: #aa96da;
+	font-family: Montserrat;
+}
+
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	color: white;
+}
+
+#title-label {
+	font-weight: 700;
+	font-size: 3rem;
+}
+
+#location-label {
+	font-weight: 400;
+}
+
+#weather-icon {
+	scale: 1;
+}
+
+.temperature-container {
+	align-items: center;
+}
+
+.temperature-container,
+.location-container {
+	display: flex;
+}
+
+.temperature-container h1 {
+	font-weight: 400;
+	font-size: 3rem;
+}
+
+#temperature-unit {
+	cursor: pointer;
+	transition: scale 0.1s ease-in-out;
+}
+
+#temperature-unit:hover {
+	color: gray;
+	scale: 0.9;
+}
+
+.hidden {
+	display: none;
+}
