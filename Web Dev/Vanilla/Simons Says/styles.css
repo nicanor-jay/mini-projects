@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap");
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: darkgray;
+	flex-direction: column;
+}
+
+.buttons-container {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	grid-gap: 10px;
+	background-color: black;
+	padding: 10px;
+	border-radius: 5%;
+}
+
+.simonButton {
+	width: 200px;
+	height: 200px;
+	color: white;
+	font-size: 20px;
+	border-radius: 10%;
+	border: none;
+}
+
+.simonButton:hover {
+	background-color: black;
+	scale: 0.95;
+}
+
+#red {
+	background-color: red;
+}
+
+#blue {
+	background-color: blue;
+}
+#yellow {
+	background-color: yellow;
+	color: black;
+}
+#green {
+	background-color: green;
+}
+
+.pressed {
+	scale: 0.95;
+}
