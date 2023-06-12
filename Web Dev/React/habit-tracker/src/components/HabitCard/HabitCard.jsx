@@ -46,7 +46,7 @@ function HabitCard({
 			</h2>
 			<i className="fa-solid fa-caret-left hidden"></i>
 			<div className="history-container">
-				{history.slice(dateIndex, dateIndex + 5).map((state, idx) => {
+				{history.slice(dateIndex, dateIndex + 10).map((state, idx) => {
 					return state.completed ? (
 						<i
 							className="fa-solid fa-check check-mark"

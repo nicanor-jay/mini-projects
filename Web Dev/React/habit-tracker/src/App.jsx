@@ -20,7 +20,9 @@ function App() {
 	const SignOut = () => {
 		return (
 			auth.currentUser && (
-				<button onClick={() => auth.signOut()}>Sign Out</button>
+				<button className="mt-4 btn btn-danger" onClick={() => auth.signOut()}>
+					Sign Out
+				</button>
 			)
 		);
 	};

@@ -21,12 +21,12 @@ function HabitHeader({ dates, dateIndex, adjustDateIndex }) {
 				></i>
 			)}
 			<div className="dates-container">
-				{dates.slice(dateIndex, dateIndex + 5).map((date, idx) => {
+				{dates.slice(dateIndex, dateIndex + 10).map((date, idx) => {
 					return <DateContainer dateString={date.dateString} key={idx} />;
 				})}
 			</div>
 
-			{dateIndex + 5 == dates.length ? (
+			{dateIndex + 10 == dates.length ? (
 				<i
 					className="fa-solid fa-caret-right navigate"
 					style={{ color: "gray", cursor: "default", pointerEvents: "none" }}
