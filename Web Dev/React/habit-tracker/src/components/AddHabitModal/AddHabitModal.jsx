@@ -22,7 +22,7 @@ const AddHabitModal = ({ CTA, icon = null }) => {
 			uid,
 			habitName: habitName,
 			habitColor: color,
-			habitHistory: generateHistory(365), //Only Viewing the last year, add second param of 'true' to generate fake data
+			habitHistory: generateHistory(365, true), //Only Viewing the last year, add second param of 'true' to generate fake data
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 		});
 	};
@@ -58,11 +58,11 @@ const AddHabitModal = ({ CTA, icon = null }) => {
 
 	const colorOptions = {
 		"#FF0000": "Red",
-		"#00FF00": "Green",
+		"#0e780e": "Green",
 		"#0000FF": "Blue",
 		"#A020F0": "Purple",
 		"#FFA500": "Orange",
-		"#FFFF00": "Yellow",
+		"#ff00fb": "Pink",
 		"#000000": "Black",
 	};
 
