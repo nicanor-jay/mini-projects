@@ -14,7 +14,6 @@ const AddHabitModal = ({ CTA, icon = null }) => {
 	const firestore = firebase.firestore();
 	const auth = getAuth();
 	const habitsRef = firestore.collection("habits");
-	const query = habitsRef.orderBy("createdAt");
 
 	const addHabitToFirestore = async (e) => {
 		const { uid, photoURL } = auth.currentUser;
@@ -23,7 +22,7 @@ const AddHabitModal = ({ CTA, icon = null }) => {
 			uid,
 			habitName: habitName,
 			habitColor: color,
-			habitHistory: generateHistory(30),
+			habitHistory: generateHistory(365), //Only Viewing the last year, add second param of 'true' to generate fake data
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 		});
 	};
@@ -37,7 +36,6 @@ const AddHabitModal = ({ CTA, icon = null }) => {
 		if (habitName == "" || color == "") {
 			return;
 		}
-		// addHabit(habitName, color);
 		addHabitToFirestore();
 		handleClose();
 	};

@@ -1,4 +1,4 @@
-function generateHistory(x) {
+function generateHistory(x, generateRandomDataBoolean = false) {
 	// Get the current date.
 	var today = new Date();
 
@@ -13,8 +13,12 @@ function generateHistory(x) {
 		// Convert the date to a string in calendar form.
 		var dateString = date.toLocaleDateString();
 
-		// Generate a random boolean value.
-		var completed = Math.random() > 0.5;
+		if (generateRandomDataBoolean) {
+			// Generate a random boolean value.
+			var completed = Math.random() > 0.5;
+		} else {
+			var completed = false;
+		}
 
 		// Add the date and completed to the dates array.
 		dates.push({

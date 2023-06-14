@@ -1,6 +1,6 @@
 .card {
 	background-color: var(--secondary);
-	width: 450px;
+	width: 900px;
 	height: 50px;
 
 	display: inline-flex;
@@ -11,13 +11,13 @@
 
 .habit-title {
 	font-size: 18px;
-	width: 40%;
+	width: 30%;
 	margin: 0;
 	padding: 5px;
 }
 
 .dates-container {
-	width: 60%;
+	width: 70%;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;

@@ -46,7 +46,7 @@ function HabitTrackerApp() {
 		<div className="d-flex justify-content-center flex-column">
 			{/* Top Element showing heading and dates */}
 			<HabitHeader
-				dates={generateCalendar(30)}
+				dates={generateCalendar(365)}
 				dateIndex={dateIndex}
 				adjustDateIndex={adjustDateIndex}
 			/>
@@ -70,6 +70,7 @@ function HabitTrackerApp() {
 						</>
 					);
 				})}
+
 			<AddHabitModal
 				CTA="Add Habit"
 				icon={<i className="fa-solid fa-plus"></i>}
